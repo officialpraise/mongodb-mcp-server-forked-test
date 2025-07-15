@@ -29,6 +29,14 @@ try {
         userConfig: config,
     });
 
+    const selectedTransport = process.env.MCP_TRANSPORT || "stdio";
+
+    if (selectedTransport === "http") {
+        // Start HTTP/SSE server (does not return)
+        await import("./httpSseServer.js");
+        process.exit(0);
+    }
+
     const transport = createEJsonTransport();
 
     const shutdown = () => {
