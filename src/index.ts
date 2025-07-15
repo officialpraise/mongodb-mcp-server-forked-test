@@ -51,7 +51,7 @@ try {
     process.once("SIGTERM", shutdown);
     process.once("SIGQUIT", shutdown);
 
-    await server.connect(transport);
+    await server.connect();
 } catch (error: unknown) {
     logger.emergency(LogId.serverStartFailure, "server", `Fatal error running server: ${error as string}`);
     process.exit(1);

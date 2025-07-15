@@ -35,7 +35,7 @@ export class Server {
         this.userConfig = userConfig;
     }
 
-    async connect(transport: Transport): Promise<void> {
+    async connect(): Promise<void> {
         this.mcpServer.server.registerCapabilities({ logging: {} });
 
         this.registerTools();
@@ -72,7 +72,7 @@ export class Server {
             await setStdioPreset(this.mcpServer, this.userConfig.logPath);
         }
 
-        await this.mcpServer.connect(transport);
+        
 
         this.mcpServer.server.oninitialized = () => {
             this.session.setAgentRunner(this.mcpServer.server.getClientVersion());
@@ -81,7 +81,7 @@ export class Server {
             logger.info(
                 LogId.serverInitialized,
                 "server",
-                `Server started with transport ${transport.constructor.name} and agent runner ${this.session.agentRunner?.name}`
+                `Server started with agent runner ${this.session.agentRunner?.name}`
             );
 
             this.emitServerEvent("start", Date.now() - this.startTime);
